@@ -1,0 +1,19 @@
+
+# name: Project Continuous Integration
+
+# on:
+#   push:
+#     branches: [master]
+
+# jobs:
+#   test:
+#     name: Build and Deploy
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: 14
+#       - name: SetUp Node Dependencies
+#         working-directory: ./backend
+#         run: npm ci
