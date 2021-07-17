@@ -23,11 +23,11 @@ jobs:
         with:
           node-version: 14
       - name: Setup the Angular Dependencies
-        # run: ls -R
-        # working-directory: pizzeria
-        run: npm ci
+        working-directory: pizzeria
+        run: ls -R
+        # run: npm ci
       - name: Build the Angular FrontEnd
-        # working-directory: pizzeria
+        working-directory: pizzeria
         run: npm run build:ci
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
