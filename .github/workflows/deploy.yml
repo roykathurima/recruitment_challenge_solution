@@ -25,7 +25,7 @@ jobs:
       - name: Setup the Angular Dependencies
         run: ls -R
         working-directory: pizzeria
-        run: npm ci
+        # run: npm ci
       - name: Build the Angular FrontEnd
         working-directory: pizzeria
         run: npm run build:ci
