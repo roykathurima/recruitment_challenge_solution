@@ -17,17 +17,19 @@ jobs:
           heroku_api_key: ${{secrets.DIWALA_HEROKU_KEY}}
           heroku_app_name: "diwala-recruitment"
           heroku_email: "kathurimaroy@gmail.com"
-          appdir: 'pizzeria/backend'
+          appdir: '../pizzeria/backend'
       # I think we can write the angular stuff here without having to specify another Job
       - uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: Check Directory
+        working-directory: ../pizziera
+        run: ls
       - name: Setup the Angular Dependencies
-        working-directory: pizzeria
-        run: ls -R
-        # run: npm ci
+        working-directory: ../pizzeria
+        run: npm ci
       - name: Build the Angular FrontEnd
-        working-directory: pizzeria
+        working-directory: ../pizzeria
         run: npm run build:ci
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
