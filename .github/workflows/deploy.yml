@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: 14
       - name: Setup the Angular Dependencies
+        run: ls -R
         working-directory: pizzeria
         run: npm ci
       - name: Build the Angular FrontEnd
