@@ -22,9 +22,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Check Directory
-        working-directory: ../pizziera
-        run: ls
       - name: Setup the Angular Dependencies
         working-directory: ../pizzeria
         run: npm ci
