@@ -17,7 +17,7 @@ app.use((req, res, next)=>{
 });
 
 // Route to test if we are online
-app.get('/pingme/', (req, res)=>{
+app.get('/', (req, res)=>{
     res.send({'error':'0', 'message':'The Server is online...'});
 });
 app.get('/angular_test/', (req, res)=>{
