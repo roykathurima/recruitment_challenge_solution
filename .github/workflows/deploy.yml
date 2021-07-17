@@ -1,13 +1,12 @@
-# Deploy the node server to HEROKU and the angular app to github pages
-
 
 name: Full Stack Dev CI
 
-on: [push]
-  branches: [master]
+on:
+  push:
+    branches: [master]
 
 jobs:
-  deploy:
+  build:
     name: Build and Deploy Node Server
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +34,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.DIWALA_GITHUB }}
           BRANCH: gh-pages
           FOLDER: pizzeria/dist/pizzeria
-  # deploy_angular_app:
-  #   name: Build and Deploy Angular App
-  #   runs-on:
