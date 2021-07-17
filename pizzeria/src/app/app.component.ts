@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 
+import { environment } from 'src/environments/environment'
+
 interface ReturnVal{
   error: string,
   message: string,
@@ -13,6 +15,7 @@ interface ReturnVal{
 })
 export class AppComponent implements OnInit {
   title = 'pizzeria';
+  apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
@@ -20,7 +23,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     try{
-      const msg = (await this.http.get('http://localhost:3000/angular_test/').toPromise()) as ReturnVal;
+      const msg = (await this.http.get(`${this.apiUrl}/angular_test/`).toPromise()) as ReturnVal;
       this.title = msg.message;
     }catch(e){
       console.error('Error during Initialization: ', e);
