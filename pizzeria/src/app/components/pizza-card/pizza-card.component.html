@@ -1,0 +1,18 @@
+
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Pepperoni Cheese Pizza</mat-card-title>
+      <mat-card-subtitle style="color:green">$3.50</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+    <mat-card-actions style="text-align: center; margin-bottom: 0.5rem;">
+      <button *ngIf="false" style="width:100%" mat-raised-button color="primary">ADD TO CART</button>
+      <div style="display: flex;">
+        <button mat-raised-button color="primary">-</button>
+        <div class="cart-items">
+            <p>2 items in cart</p>
+        </div>
+        <button style="margin: 0 0" mat-raised-button color="primary">+</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>

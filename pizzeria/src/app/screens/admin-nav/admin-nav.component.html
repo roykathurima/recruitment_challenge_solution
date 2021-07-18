@@ -1,0 +1,41 @@
+<nav style="background-color: darkgray; display: flex; justify-content: space-between;" class="navbar navbar-light bg-light">
+    <div style="align-self: center; width: 90%;">
+        <i style="line-height: 2;" class="fas fa-shopping-cart"></i>
+        <span class='badge badge-warning' id='lblCartCount'> 5 </span>
+    </div>
+    <div style="align-self: center;">
+        <a style="display: flex; margin-top:1rem" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <p style="margin-right:1rem">Clark Kent</p>
+            <i class="fas fa-sort-down"></i>
+        </a>
+        <div style="right: 0; padding-left: 0.3rem; left:85%" class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="#">LogOut</a>
+        </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-3">
+              <mat-card style="border-bottom: 0; margin-left:0.5rem; height: 40vh;">
+                <a class="home-route" [ngClass]='rla.isActive?"active-route":""' style="color: black;" routerLink="/home" routerLinkActive #rla="routerLinkActive" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">
+                    <i style="margin-top:0.4rem" class="fas fa-home"></i>    
+                    <p style="margin-left: 1rem;">Home</p>
+                </a>
+                <a class="cart-route" [ngClass]='trla.isActive?"active-route":""' style="color: black;" routerLink="/orders" routerLinkActive #trla="routerLinkActive" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">
+                    <i style="margin-top:0.4rem" class="fab fa-jedi-order"></i>    
+                    <p style="margin-left: 1rem;">Orders</p>
+                </a>
+                <a class="cart-route" [ngClass]='srla.isActive?"active-route":""' style="color: black;" routerLink="/add-pizza" routerLinkActive #srla="routerLinkActive" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">
+                    <i style="margin-top:0.4rem" class="fas fa-pizza-slice"></i>    
+                    <p style="margin-left: 1rem;">Create Pizza</p>
+                </a>
+              </mat-card>
+          </div>
+          <div class="col-md-9">
+            <div style="min-height: 85vh;background-color: #ccc; border-radius:2rem; padding:1rem">
+                <router-outlet></router-outlet>
+            </div>
+          </div>
+      </div>
+  </div>

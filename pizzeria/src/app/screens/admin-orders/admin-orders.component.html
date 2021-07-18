@@ -1,0 +1,30 @@
+<div style="padding: 1rem 0;">
+    <div style="display: flex; justify-content: space-between; padding: 0 1rem">
+        <h1><b>Orders</b></h1>
+        <div style="margin-top: 0.5rem; color: purple;">
+            <i style="margin-right: 0.5rem" class="fas fa-plus"></i>
+            <span>Add Pizza</span>
+        </div>
+    </div>
+    <div>
+        <input style="width: 100%;" type="text" class="form-control" placeholder="Search" />
+
+        <!-- Mat-Table -->
+        <table style="margin-top: 1rem;" mat-table [dataSource]="transactions" class="mat-elevation-z8">
+            <!-- Product Column -->
+            <ng-container matColumnDef="product">
+              <th mat-header-cell *matHeaderCellDef> <b>Customer</b> </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.product}} </td>
+            </ng-container>
+    
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> <b>Date</b> </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.date}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    </div>
+</div>
