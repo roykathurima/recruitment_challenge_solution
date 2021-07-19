@@ -12,7 +12,12 @@ let conn_credentials = dbConfig
 if(process.env.NODE_ENV == 'production'){
     // the DATABASE_URL is also exposed as an environmnent var in Heroku
     // We use it to connect to the db added in heroku
-    conn_credentials = {connectionString: process.env.DATABASE_URL}
+    conn_credentials = {
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+          }
+    }
 }
 // I hear connection pools are better than clients :)
 const pool = new Pool({
