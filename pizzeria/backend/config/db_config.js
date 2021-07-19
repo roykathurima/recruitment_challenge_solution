@@ -1,7 +1,7 @@
 const dbConfig = {
     user: 'content',
     host: 'localhost',
-    database: 'roy_test',
+    database: 'pizziera',
     password: null,
     port: 5432,
 }
