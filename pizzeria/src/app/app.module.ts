@@ -36,6 +36,7 @@ import { AddPizzaComponent } from './screens/add-pizza/add-pizza.component';
 
 import { environment } from 'src/environments/environment';
 import { ErrorMessageComponent } from './components/error-message/error-message.component'
+import { CartService } from 'src/app/services/cart.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,7 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
     MatInputModule,
     MatTableModule,
   ],
-  providers: [],
+  providers: [CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
