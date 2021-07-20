@@ -10,7 +10,7 @@
                 <p>Password:</p>
                 <input [(ngModel)]="password" class="form-control" type="password" placeholder="Please Enter Your Password..." /><br/>
             </div>
-            <button style="width: 50%;" mat-raised-button color="primary">LOGIN</button>
+            <button (click)="login()" style="width: 50%;" mat-raised-button color="primary">LOGIN</button>
             <div style="display: flex; justify-content: space-evenly; margin-top: 2rem;" class="row">
                 <a class="mr-2" routerLink="forgot-password">I Forgot My Password</a>
                 <a routerLink='registration'>SignUp</a>

@@ -11,7 +11,8 @@ import { ErrorMessageComponent } from 'src/app/components/error-message/error-me
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
+  providers: [AuthService]
 })
 export class RegistrationComponent implements OnInit {
 
@@ -41,8 +42,23 @@ export class RegistrationComponent implements OnInit {
       return;
     }
     
+    // Check if the passwords match
     if(this.password != this.confirm_password){
       this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message: "Make Sure that Your Passwords Match"}});
+      return;
+    }
+
+    // Check if email if formatted properly
+    const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if(!this.user.email.match(mailformat) || this.user.email.length < 8){
+      this.dialog.open(ErrorMessageComponent, {width: '20%', data:{message:'Please provide a valid Email to proceed'}});
+      return;
+    }
+
+    // Check if the phone number is actually a number
+    const phoneformat = /^\d+$/;
+    if(!this.user.phone_number.match(phoneformat) || this.user.phone_number.length < 8){
+      this.dialog.open(ErrorMessageComponent, {width: '20%', data:{message:'Please provide a valid Phone Number to proceed'}});
       return;
     }
     this.isloading = true

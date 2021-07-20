@@ -8,7 +8,7 @@ const dbConfig = require('./config/db_config');
 let conn_credentials = dbConfig
 
 // Heroku already has a NODE_ENV environment var set to production
-// We use it know if we are developing locally or we have deployed to heroku
+// We use it to know if we are developing locally or we have deployed to heroku
 if(process.env.NODE_ENV == 'production'){
     // the DATABASE_URL is also exposed as an environmnent var in Heroku
     // We use it to connect to the db added in heroku
@@ -109,4 +109,20 @@ const get_pizzas = async (req, res)=>{
     }
 }
 
-module.exports = { add_user, get_user, get_pizza, get_pizzas, add_pizza }
+// Delete Pizza
+const delete_pizza = async (req, res)=>{
+    const id = req.body.id;
+    const query = {
+        text: 'DELETE FROM pizza WHERE id = $1',
+        values: [id],
+    }
+    try{
+        const ret_data = await pool.query(query);
+        res.send({'error':'0', 'message':{row_count: ret_data.rowCount, action:ret_data.command}});
+    }catch(e){
+        console.error('Error Deleting Pizzas: ', e);
+        res.send({'error':'1', 'message':'Failed to delete the Pizza'})
+    }
+}
+
+module.exports = { add_user, get_user, get_pizza, get_pizzas, add_pizza, delete_pizza }

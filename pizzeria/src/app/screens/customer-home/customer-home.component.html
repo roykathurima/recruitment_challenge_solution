@@ -5,11 +5,11 @@
     </div>
     <div style="align-self: center;">
         <a style="display: flex; margin-top:1rem" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <p style="margin-right:1rem">Matt Smith</p>
+            <p style="margin-right:1rem">{{user_name}}</p>
             <i class="fas fa-sort-down"></i>
         </a>
         <div style="right: 0; padding-left: 0.3rem; left:85%" class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="#">LogOut</a>
+        <a (click)="logout()" class="dropdown-item" href="#">LogOut</a>
         </div>
     </div>
   </nav>

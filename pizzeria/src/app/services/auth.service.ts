@@ -58,7 +58,7 @@ export class AuthService {
         // consider signing out of Firebase... meh, that inconsequential for now since we are mainting our own state
         .catch(err=>reject(err));
       })
-      .catch(err=>resolve(err));
+      .catch(err=>reject(err));
     })
   }
 
