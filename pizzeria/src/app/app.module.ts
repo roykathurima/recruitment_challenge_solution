@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // AngularFire Imports
 import { AngularFireModule } from '@angular/fire';
@@ -32,7 +34,8 @@ import { AdminHomeComponent } from './screens/admin-home/admin-home.component';
 import { AdminOrdersComponent } from './screens/admin-orders/admin-orders.component';
 import { AddPizzaComponent } from './screens/add-pizza/add-pizza.component';
 
-import { environment } from 'src/environments/environment'
+import { environment } from 'src/environments/environment';
+import { ErrorMessageComponent } from './components/error-message/error-message.component'
 
 @NgModule({
   declarations: [
@@ -49,7 +52,8 @@ import { environment } from 'src/environments/environment'
     AdminNavComponent,
     AdminHomeComponent,
     AdminOrdersComponent,
-    AddPizzaComponent
+    AddPizzaComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +62,8 @@ import { environment } from 'src/environments/environment'
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     FormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
     // Angular Material Imports
     MatCardModule,
     MatButtonModule,

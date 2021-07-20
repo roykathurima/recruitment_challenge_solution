@@ -12,6 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  email = '';
+  password = '';
+  isloading = false;
+
   constructor(
     // Inject the AuthService into the component
     private aservice: AuthService,

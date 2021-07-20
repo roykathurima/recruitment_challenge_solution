@@ -4,19 +4,27 @@
             <h3 style="margin-top: 1rem; text-align: center; font-weight: 400; font-size: 2.5rem;"><b>CREATE ACCOUNT</b></h3>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Email:</p>
-                <input [(ngModel)]="email" class="form-control" type="text" placeholder="Please Enter Your Email..." />
+                <input [(ngModel)]="user.email" class="form-control" type="text" placeholder="Please Enter Your Email" />
             </div>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Full Name:</p>
-                <input [(ngModel)]="full_name" class="form-control" type="text" placeholder="Please Enter Your Full Name..." />
+                <input [(ngModel)]="user.name" class="form-control" type="text" placeholder="Please Enter Your Full Name" />
             </div>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Phone Number:</p>
-                <input [(ngModel)]="phone_number" class="form-control" type="text" placeholder="Please Enter Your Phone Number..." />
+                <input [(ngModel)]="user.phone_number" class="form-control" type="text" placeholder="Please Enter Your Phone Number" />
             </div>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Address:</p>
-                <input [(ngModel)]="address" class="form-control" type="text" placeholder="Please Enter Your Address..." />
+                <input [(ngModel)]="user.address" class="form-control" type="text" placeholder="Please Enter Your Address" />
+            </div>
+            <div style="text-align: start; margin-top: 1rem;">
+                <p>Password:</p>
+                <input [(ngModel)]="password" class="form-control" type="password" placeholder="Please Enter Your Password" />
+            </div>
+            <div style="text-align: start; margin-top: 1rem;">
+                <p>Confirm Password:</p>
+                <input [(ngModel)]="confirm_password" class="form-control" type="password" placeholder="Please Confirm Your Password" />
             </div>
             <button (click)="createAccount()" style="width: 50%; margin-top: 4rem; margin-bottom: 1rem;" mat-raised-button color="primary">CREATE ACCOUNT</button> <br/>
             <a routerLink="">LogIn</a>

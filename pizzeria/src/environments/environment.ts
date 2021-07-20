@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http:localhost:3000',
+  apiUrl: 'http://localhost:3000',
   firebaseConfig: {
     apiKey: "AIzaSyCrmwu8gO2jUdh3on7_wQHw4bmrFTY9pdI",
     authDomain: "diwala-recruitment.firebaseapp.com",

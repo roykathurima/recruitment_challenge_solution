@@ -4,11 +4,11 @@
             <h3 style="text-align: center; font-weight: 400; font-size: 2.5rem;"><b>WELCOME BACK</b></h3>
             <div style="text-align: start;">
                 <p>Email:</p>
-                <input class="form-control" type="text" placeholder="Please Enter Your Email..." />
+                <input [(ngModel)]="email" class="form-control" type="text" placeholder="Please Enter Your Email..." />
             </div>
             <div style="margin-top: 1rem;text-align: start;">
                 <p>Password:</p>
-                <input class="form-control" type="password" placeholder="Please Enter Your Password..." /><br/>
+                <input [(ngModel)]="password" class="form-control" type="password" placeholder="Please Enter Your Password..." /><br/>
             </div>
             <button style="width: 50%;" mat-raised-button color="primary">LOGIN</button>
             <div style="display: flex; justify-content: space-evenly; margin-top: 2rem;" class="row">
@@ -18,3 +18,5 @@
         </div>
     </mat-card>
 </div>
+
+<app-spinner *ngIf="isloading"></app-spinner>
