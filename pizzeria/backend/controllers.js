@@ -66,4 +66,47 @@ const get_user = async (req, res)=>{
     }
 }
 
-module.exports = {add_user, get_user}
+// controller for adding pizzas
+const add_pizza = async (req, res)=>{
+    const { name, price } = req.body;
+    const query = {
+        text: 'INSERT INTO pizza (name, price) VALUES ($1, $2)',
+        values: [name, price]
+    }
+    try{
+        const ret_data = await pool.query(query);
+        res.send({'error':'0', 'message':{row_count: ret_data.rowCount, action:ret_data.command}});
+    }catch(e){
+        console.error("Error creating Pizzas: ", e);
+        res.send({'error':'1', 'message':'Failed to insert the pizza into the database'});
+    }
+}
+
+// Get a single pizza with ID -> This is for Pizza Details
+const get_pizza = async (req, res)=>{
+    const id = req.body.id;
+    const query = {
+        text: 'SELECT * FROM pizza WHERE id = $1',
+        values: [id],
+    }
+    try{
+        const ret_data = await pool.query(query);
+        res.send({'error':'0', 'data':ret_data.rows[0]});
+    }catch(e){
+        console.error('Error getting pizza: ', e);
+        res.send({'error':'1', 'message':'Failed to fetch the pizza from the database'});
+    }
+}
+
+// Get all the Pizzas -> This is for the store
+const get_pizzas = async (req, res)=>{
+    try{
+        const ret_data = await pool.query('SELECT * FROM pizza');
+        res.send({'error':'0', 'data':ret_data.rows[0]});
+    }catch(e){
+        console.error('Error getting pizzas: ', e);
+        res.send({'error':'1', 'message':'Failed to fetch the pizzas'});
+    }
+}
+
+module.exports = { add_user, get_user, get_pizza, get_pizzas, add_pizza }
