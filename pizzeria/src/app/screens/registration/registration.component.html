@@ -4,22 +4,24 @@
             <h3 style="margin-top: 1rem; text-align: center; font-weight: 400; font-size: 2.5rem;"><b>CREATE ACCOUNT</b></h3>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Email:</p>
-                <input class="form-control" type="text" placeholder="Please Enter Your Email..." />
+                <input [(ngModel)]="email" class="form-control" type="text" placeholder="Please Enter Your Email..." />
             </div>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Full Name:</p>
-                <input class="form-control" type="text" placeholder="Please Enter Your Full Name..." />
+                <input [(ngModel)]="full_name" class="form-control" type="text" placeholder="Please Enter Your Full Name..." />
             </div>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Phone Number:</p>
-                <input class="form-control" type="text" placeholder="Please Enter Your Phone Number..." />
+                <input [(ngModel)]="phone_number" class="form-control" type="text" placeholder="Please Enter Your Phone Number..." />
             </div>
             <div style="text-align: start; margin-top: 1rem;">
                 <p>Address:</p>
-                <input class="form-control" type="text" placeholder="Please Enter Your Address..." />
+                <input [(ngModel)]="address" class="form-control" type="text" placeholder="Please Enter Your Address..." />
             </div>
-            <button style="width: 50%; margin-top: 4rem; margin-bottom: 1rem;" mat-raised-button color="primary">CREATE ACCOUNT</button> <br/>
-            <a href="">LogIn</a>
+            <button (click)="createAccount()" style="width: 50%; margin-top: 4rem; margin-bottom: 1rem;" mat-raised-button color="primary">CREATE ACCOUNT</button> <br/>
+            <a routerLink="">LogIn</a>
         </div>
     </mat-card>
 </div>
+
+<app-spinner *ngIf="isloading"></app-spinner>
