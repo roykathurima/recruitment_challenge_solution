@@ -33,7 +33,7 @@ export class PizzaCardComponent implements OnInit {
     this.cservice.current_cart.subscribe(cart=>this.current_cart = cart);
     this.in_cart = this.cservice.current_cart.pipe(
       map(cart=>{
-        return cart.items.filter(item=>item.pizza_id == this.pizza.id)[0].quantity
+        return cart.items.filter(item=>item.pizza_id == this.pizza.id)[0]?cart.items.filter(item=>item.pizza_id == this.pizza.id)[0].quantity:0
       })
     );
   }
@@ -78,10 +78,10 @@ export class PizzaCardComponent implements OnInit {
   removeQuantity(){
     // Means that we already have this item, we are just incrementing the quantity
     this.current_cart.items.forEach(e=>{
-      if(e.quantity == 1){
-        this.one_button = true;
-      }
       if(e.pizza_id == this.pizza.id){
+        if(e.quantity == 1){
+          this.one_button = true;
+        }
         e.quantity -= 1; 
       }
     })
