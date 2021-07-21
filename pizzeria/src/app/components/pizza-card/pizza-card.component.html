@@ -8,11 +8,11 @@
     <mat-card-actions style="text-align: center; margin-bottom: 0.5rem;">
       <button (click)="addToCart()" *ngIf="one_button" style="width:100%" mat-raised-button color="primary">ADD TO CART</button>
       <div *ngIf="!one_button" style="display: flex;">
-        <button mat-raised-button color="primary">-</button>
+        <button (click)="removeQuantity()" mat-raised-button color="primary">-</button>
         <div class="cart-items">
-            <p>2 items in cart</p>
+            <p>{{in_cart | async}} items in cart</p>
         </div>
-        <button style="margin: 0 0" mat-raised-button color="primary">+</button>
+        <button (click)="addQuantity()" style="margin: 0 0" mat-raised-button color="primary">+</button>
       </div>
     </mat-card-actions>
   </mat-card>
