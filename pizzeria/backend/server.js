@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Import our controllers
-const { add_user, get_user, get_pizzas, get_pizza, add_pizza } = require('./controllers');
+const { add_user, get_user, get_pizzas, get_pizza, add_pizza, delete_pizza } = require('./controllers');
 
 // App-level to log request method and path
 app.use((req, res, next)=>{
@@ -27,6 +27,7 @@ app.post('/get-user/', get_user);
 app.post('/get-pizza/', get_pizza);
 app.post('/add-pizza/', add_pizza);
 app.get('/get-pizzas/', get_pizzas);
+app.get('/delete-pizza/', delete_pizza);
 
 
 const PORT = process.env.PORT || 3000
