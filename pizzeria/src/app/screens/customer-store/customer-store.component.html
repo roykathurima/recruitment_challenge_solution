@@ -3,7 +3,7 @@
     <!-- Added the ngIF structural directive to render this part of the DOM IFF we have pizzas -->
     <div *ngIf="pizzas.length > 0" class="row" style="display: table;">
         <div *ngFor="let pizza of pizzas" class="col-md-6" style="margin-bottom: 2rem;">
-            <app-pizza-card [pizza_name]="pizza.name" [price]='pizza.price' ></app-pizza-card>
+            <app-pizza-card [pizza]="pizza" ></app-pizza-card>
         </div>
     </div>
     <!-- ngIF directive to render this part of the DOM IFF we do not have pizzas -->

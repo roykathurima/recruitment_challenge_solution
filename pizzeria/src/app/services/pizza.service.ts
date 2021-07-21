@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 
 // The shape of the Pizza
 export interface Pizza{
+  id: number,
   name: string,
   price: number,
 }

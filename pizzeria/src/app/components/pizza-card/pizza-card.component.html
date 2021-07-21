@@ -1,13 +1,13 @@
 
 <mat-card>
     <mat-card-header>
-      <mat-card-title>{{pizza_name}}</mat-card-title>
-      <mat-card-subtitle style="color:green">${{price}}</mat-card-subtitle>
+      <mat-card-title>{{pizza.name}}</mat-card-title>
+      <mat-card-subtitle style="color:green">${{pizza.price}}</mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
     <mat-card-actions style="text-align: center; margin-bottom: 0.5rem;">
-      <button *ngIf="false" style="width:100%" mat-raised-button color="primary">ADD TO CART</button>
-      <div style="display: flex;">
+      <button (click)="addToCart()" *ngIf="one_button" style="width:100%" mat-raised-button color="primary">ADD TO CART</button>
+      <div *ngIf="!one_button" style="display: flex;">
         <button mat-raised-button color="primary">-</button>
         <div class="cart-items">
             <p>2 items in cart</p>
