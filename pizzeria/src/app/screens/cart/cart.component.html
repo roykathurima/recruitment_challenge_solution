@@ -14,11 +14,11 @@
             <mat-header-cell mat-header-cell style="margin-bottom: -1rem;" *matHeaderCellDef> <b>Quantity</b> </mat-header-cell>
             <mat-cell mat-cell *matCellDef="let entry">
               <div style="display: flex;">
-                  <button mat-raised-button color="primary">-</button>
+                  <button (click)="removeQuantity(entry.id)" mat-raised-button color="primary">-</button>
                   <div class="cart-items">
                       <p style="margin:0 1rem">{{entry.quantity}} in cart</p>
                   </div>
-                  <button style="margin: 0 0" mat-raised-button color="primary">+</button>
+                  <button (click)="addQuantity(entry.id)" style="margin: 0 0" mat-raised-button color="primary">+</button>
                 </div>
             </mat-cell>
             <td mat-footer-cell *matFooterCellDef></td>

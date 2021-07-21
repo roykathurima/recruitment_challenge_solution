@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // My Imports
@@ -18,6 +18,8 @@ export class PizzaCardComponent implements OnInit, OnDestroy {
   pizza = {} as Pizza;
   current_cart = {} as Cart;
   
+  // We need to cancel subscriptions
+  current_cart_sub = new Subscription();
   //How many of these items are in the cart 
   in_cart = new Observable<number>();
 
@@ -29,12 +31,14 @@ export class PizzaCardComponent implements OnInit, OnDestroy {
   ) { }
   ngOnDestroy(): void {
     localStorage.setItem('cart_items', JSON.stringify(this.current_cart.items));
+    // Unsubscribe
+    this.current_cart_sub.unsubscribe();
   }
 
   ngOnInit(): void {
     // Get the current cart, if any
     // Should also unsubscribe from these subscriptions....
-    this.cservice.current_cart.subscribe(cart=>this.current_cart = cart);
+    this.current_cart_sub = this.cservice.current_cart.subscribe(cart=>this.current_cart = cart);
     this.in_cart = this.cservice.current_cart.pipe(
       map(cart=>{
         const incart = cart.items.filter(item=>item.pizza_id == this.pizza.id)[0];
@@ -46,8 +50,12 @@ export class PizzaCardComponent implements OnInit, OnDestroy {
       if(f){
         // Should consider adding user info as well so that you do not get somebody else's cart
         // But really that feels beyond the scope of the task
+        // We are making sure that the button's state we get back is not stale;
+        // Thus on top of checking whether we accessed the button when we left,
+        // we also check if the pizza associated with it was removed while we were away
+        // could be cleaner but.... ah well, we'll optimize it later if need be.
         const items = (JSON.parse(f as string) as Array<CartItem>)
-        .filter(e=>e.pizza_id == this.pizza.id).length;
+        .filter(e=>e.pizza_id == this.pizza.id && this.current_cart.items.filter(el=>el.pizza_id == e.pizza_id).length > 0).length;
         items>0?this.one_button = false:this.one_button = true;
       }
   }
