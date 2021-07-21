@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { User, AuthService } from 'src/app/services/auth.service';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService, Cart } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-cutomer-home',
@@ -12,7 +12,7 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CustomerHomeComponent implements OnInit {
   user_name = '';
-  cart_items  = new Observable<number>()
+  cart_items  = new Observable<Cart>()
   constructor(
     private aservice: AuthService,
     private cservice: CartService,
@@ -23,7 +23,7 @@ export class CustomerHomeComponent implements OnInit {
     this.user_name = user_info.name;
 
     // This updates the cart items counter
-    this.cart_items = this.cservice.current_items
+    this.cart_items = this.cservice.current_cart;
   }
 
   logout(){

@@ -48,13 +48,10 @@ export class PizzaCardComponent implements OnInit {
         net_total: this.pizza.price,
       }
       this.cservice.updateCart(cart);
-      // set number of items in cart
-      this.cservice.updateItems(cart.items.length);
     }else{
       // If a cart already exists
       this.current_cart.items.push(cart_item);
       this.cservice.updateCart(this.current_cart);
-      this.cservice.updateItems(this.current_cart.items.length);
     }
   }
 

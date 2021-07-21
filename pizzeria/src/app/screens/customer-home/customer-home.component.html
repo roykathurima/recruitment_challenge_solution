@@ -1,7 +1,7 @@
 <nav style="background-color: darkgray; display: flex; justify-content: space-between;" class="navbar navbar-light bg-light">
     <div style="align-self: center; width: 90%;">
         <i style="line-height: 2;" class="fas fa-shopping-cart"></i>
-        <span class='badge badge-warning' id='lblCartCount'> {{cart_items |async}} </span>
+        <span class='badge badge-warning' id='lblCartCount'> {{(cart_items |async)?.items?.length}} </span>
     </div>
     <div style="align-self: center;">
         <a style="display: flex; margin-top:1rem" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
