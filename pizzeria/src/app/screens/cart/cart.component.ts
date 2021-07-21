@@ -71,6 +71,8 @@ export class CartComponent implements OnInit {
   }
   
   checkOut(){
+    // Commit the changes to the database
+    // Navigate to the checkout route
     this.router.navigateByUrl('checkout');
   }
   clearCart(){
