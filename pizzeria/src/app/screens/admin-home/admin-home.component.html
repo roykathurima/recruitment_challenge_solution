@@ -1,10 +1,10 @@
 <div style="padding: 1rem 0">
     <div style="display: flex; justify-content: space-between; padding: 0 1rem">
         <h1><b>Pizziera Pizzas</b></h1>
-        <div style="margin-top: 0.5rem; color: purple;">
+        <a routerLink='../add-pizza' style="margin-top: 0.5rem; color: purple;">
             <i style="margin-right: 0.5rem" class="fas fa-plus"></i>
             <span>Add Pizza</span>
-        </div>
+        </a>
     </div>
     <div>
         <input style="width: 100%;" type="text" class="form-control" placeholder="Search" />
@@ -28,3 +28,4 @@
           </table>
     </div>
 </div>
+<app-spinner *ngIf="isloading"></app-spinner>

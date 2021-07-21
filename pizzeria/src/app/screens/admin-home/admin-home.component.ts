@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService, User } from 'src/app/services/auth.service';
-
 
 interface Transaction {
   product: string;
@@ -11,19 +9,16 @@ interface Transaction {
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.css'],
-  providers: [AuthService],
+  styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent implements OnInit {
-  user_name = '';
+  isloading = false;
 
-  constructor(
-    private aservice: AuthService,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    const user_info = JSON.parse(localStorage.getItem('user_info') as string) as User;
-    this.user_name = user_info.name;
+    // Fetch the Pizzas Right Here
+    // Remember that there is a search feature...
   }
 
   displayedColumns: string[] = ['product', "price"];
@@ -34,8 +29,4 @@ export class AdminHomeComponent implements OnInit {
     {product: 'Sunscreen', price: 4},
     {product: 'Berbecue Pizza', price: 25},
   ];
-
-  logout(){
-    this.aservice.logout();
-  }
 }
