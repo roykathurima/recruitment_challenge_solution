@@ -102,7 +102,7 @@ const get_pizza = async (req, res)=>{
 const get_pizzas = async (req, res)=>{
     try{
         const ret_data = await pool.query('SELECT * FROM pizza');
-        res.send({'error':'0', 'data':ret_data.rows[0]});
+        res.send({'error':'0', 'data':ret_data.rows});
     }catch(e){
         console.error('Error getting pizzas: ', e);
         res.send({'error':'1', 'message':'Failed to fetch the pizzas'});

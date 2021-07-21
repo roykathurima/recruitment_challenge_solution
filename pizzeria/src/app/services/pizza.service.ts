@@ -26,7 +26,7 @@ export class PizzaService {
     return new Promise((resolve, reject)=>{
       const url = this.apiUrl + "/get-pizzas/";
       this.http.get(url).toPromise()
-      .then(pizzas=>resolve(pizzas as Array<Pizza>))
+      .then(pizzas=>resolve((pizzas as any).data as Array<Pizza>))
       .catch(err=>reject(err));
     })
   }
@@ -36,7 +36,7 @@ export class PizzaService {
     return new Promise((resolve, reject)=>{
       const url = this.apiUrl + "/get-pizza/";
       this.http.post(url, {id}).toPromise()
-      .then(pizza=>resolve(pizza as Pizza))
+      .then(pizza=>resolve((pizza as any).data as Pizza))
       .catch(err=>reject(err));
     });
   }
