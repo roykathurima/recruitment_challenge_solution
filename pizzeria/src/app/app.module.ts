@@ -37,6 +37,7 @@ import { AddPizzaComponent } from './screens/add-pizza/add-pizza.component';
 import { environment } from 'src/environments/environment';
 import { ErrorMessageComponent } from './components/error-message/error-message.component'
 import { CartService } from 'src/app/services/cart.service';
+import { CheckoutComponent } from './screens/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { CartService } from 'src/app/services/cart.service';
     AdminHomeComponent,
     AdminOrdersComponent,
     AddPizzaComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

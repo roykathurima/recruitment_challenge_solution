@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from 'src/app/screens/forgot-password/forgot-
 import { CustomerHomeComponent } from 'src/app/screens/customer-home/customer-home.component';
 import { CustomerStoreComponent } from 'src/app/screens/customer-store/customer-store.component';
 import { CartComponent } from 'src/app/screens/cart/cart.component';
+import { CheckoutComponent } from 'src/app/screens/checkout/checkout.component';
 
 // Admin Routes
 import { AdminNavComponent } from 'src/app/screens/admin-nav/admin-nav.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: '', component: CustomerHomeComponent, children:[
     {path: 'store', component:CustomerStoreComponent},
     {path: 'cart', component:CartComponent},
+    {path: 'checkout', component:CheckoutComponent},
   ]},
 
   // Admin Routes

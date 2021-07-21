@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { CartService, Cart, CartItem } from 'src/app/services/cart.service';
@@ -21,12 +22,12 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cservice: CartService,
+    private router: Router,
   ) { }
 
   displayedColumns: string[] = ['product', 'quantity', "price"];
   current_cart = {} as Cart;
   cart_entries: CartEntry[] = [];
-
   
   ngOnInit(): void {
     const pizzas = JSON.parse(localStorage.getItem('pizzas') as string) as Array<Pizza>;
@@ -40,8 +41,8 @@ export class CartComponent implements OnInit {
           const entry = {
             product: pizzas.filter(e=>e.id == item.pizza_id)[0].name,
             quantity: item.quantity,
-            price: item.subtotal,
-            id:item.pizza_id
+            price: item.unit_price,
+            id:item.pizza_id,
           } as CartEntry
           retVal.push(entry);
         })
@@ -66,13 +67,13 @@ export class CartComponent implements OnInit {
     })
     // Remove any cart item having the quantity property of zero and below
     this.current_cart.items = this.current_cart.items.filter(el=>el.quantity>0);
-    console.log('Cart after removal: ', this.current_cart)
     this.cservice.updateCart(this.current_cart);
   }
   
-  checkOut(){}
+  checkOut(){
+    this.router.navigateByUrl('checkout');
+  }
   clearCart(){
-    console.log("for Shizzle")
     this.cservice.updateCart({items:[] as Array<CartItem>} as Cart);
   }
 
@@ -80,6 +81,6 @@ export class CartComponent implements OnInit {
   
   /** Gets the potential total cost of the transaction. */
   getTotalCost() {
-    return this.cart_entries.map(t => t.price).reduce((acc, value) => acc + value, 0);
+    return this.cart_entries.map(t => t.price * t.quantity).reduce((acc, value) => acc + value, 0);
   }
 }
