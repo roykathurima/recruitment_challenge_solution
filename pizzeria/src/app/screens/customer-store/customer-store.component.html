@@ -1,16 +1,13 @@
 <div style="padding: 1rem 0;">
     <h1><b>Pizzeria Store</b></h1>
-    <div class="row" style="display: table;">
-        <!-- Will probably put an ngfor structural directive here -->
-        <div class="col-md-6" style="margin-bottom: 2rem;">
-            <app-pizza-card ></app-pizza-card>
+    <!-- Added the ngIF structural directive to render this part of the DOM IFF we have pizzas -->
+    <div *ngIf="pizzas.length > 0" class="row" style="display: table;">
+        <div *ngFor="let pizza of pizzas" class="col-md-6" style="margin-bottom: 2rem;">
+            <app-pizza-card [pizza_name]="pizza.name" [price]='pizza.price' ></app-pizza-card>
         </div>
-        <div class="col-md-6" style="margin-bottom: 2rem;">
-            <app-pizza-card ></app-pizza-card>
-        </div>
-        <div class="col-md-6" style="margin-bottom: 2rem;">
-            <app-pizza-card ></app-pizza-card>
-        </div>
-        
     </div>
+    <!-- ngIF directive to render this part of the DOM IFF we do not have pizzas -->
+    <h2 *ngIf="pizzas.length <= 0" style="color: rgb(187, 30, 30);">There are no Pizzas in the store... :(</h2>
 </div>
+
+<app-spinner *ngIf="isloading"></app-spinner>

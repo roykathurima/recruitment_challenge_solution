@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 // The shape of the Pizza
-interface Pizza{
+export interface Pizza{
   name: string,
   price: number,
 }
