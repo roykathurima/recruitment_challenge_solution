@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'
 
 // Import My Custom Services
-import { CartService } from 'src/app/services/cart.service';
 import { PizzaService, Pizza } from 'src/app/services/pizza.service';
 
 // The Error Dialog Component
@@ -15,12 +14,11 @@ import { ErrorMessageComponent } from 'src/app/components/error-message/error-me
   providers: [PizzaService],
 })
 export class CustomerStoreComponent implements OnInit {
-  num = 0
+  
   pizzas = new Array<Pizza>();
   isloading = false;
 
   constructor(
-    private cservice: CartService,
     private pservice: PizzaService,
     private dialog: MatDialog,
   ) { }
@@ -31,6 +29,8 @@ export class CustomerStoreComponent implements OnInit {
     .then(pizzas=>{
       this.isloading = false
       this.pizzas = pizzas;
+      // Lets Crudely store these here for the cart. :)
+      localStorage.setItem('pizzas', JSON.stringify(pizzas));
     })
     .catch(err=>{
       this.isloading = false;
@@ -38,11 +38,5 @@ export class CustomerStoreComponent implements OnInit {
       console.error("Error Fetching Pizzas: ", err);
     });
   }
-
-  // PoC to show that you can change a variable in another component from here
-  // updateCartCounter(){
-  //   this.num = this.num+1;
-  //   this.cservice.updateItems(this.num)
-  // }
 
 }

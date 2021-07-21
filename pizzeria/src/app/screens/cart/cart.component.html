@@ -1,37 +1,44 @@
 <div style="padding: 1rem 0;">
     <h1><b>Shopping Cart</b></h1>
-    <table mat-table [dataSource]="transactions" class="mat-elevation-z8">
-        <!-- Product Column -->
-        <ng-container matColumnDef="product">
-          <th mat-header-cell *matHeaderCellDef> <b>Product</b> </th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.product}} </td>
-          <td mat-footer-cell *matFooterCellDef> <b>Total</b> </td>
-        </ng-container>
-      
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-          <mat-header-cell mat-header-cell style="margin-bottom: -1rem;" *matHeaderCellDef> <b>Quantity</b> </mat-header-cell>
-          <mat-cell mat-cell *matCellDef="let transaction">
-            <div style="display: flex;">
-                <button mat-raised-button color="primary">-</button>
-                <div class="cart-items">
-                    <p style="margin:0 1rem">{{transaction.quantity}} in cart</p>
+    <div *ngIf="cart_entries.length > 0">
+      <table mat-table [dataSource]="cart_entries" class="mat-elevation-z8">
+          <!-- Product Column -->
+          <ng-container matColumnDef="product">
+            <th mat-header-cell *matHeaderCellDef> <b>Product</b> </th>
+            <td mat-cell *matCellDef="let entry"> {{entry.product}} </td>
+            <td mat-footer-cell *matFooterCellDef> <b>Total</b> </td>
+          </ng-container>
+        
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+            <mat-header-cell mat-header-cell style="margin-bottom: -1rem;" *matHeaderCellDef> <b>Quantity</b> </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let entry">
+              <div style="display: flex;">
+                  <button mat-raised-button color="primary">-</button>
+                  <div class="cart-items">
+                      <p style="margin:0 1rem">{{entry.quantity}} in cart</p>
+                  </div>
+                  <button style="margin: 0 0" mat-raised-button color="primary">+</button>
                 </div>
-                <button style="margin: 0 0" mat-raised-button color="primary">+</button>
-              </div>
-          </mat-cell>
-          <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-
-        <!-- Price Column -->
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef> <b>Price</b> </th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.price | currency}} </td>
-          <td mat-footer-cell *matFooterCellDef><b> {{getTotalCost() | currency}}</b> </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-      </table>
+            </mat-cell>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+  
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> <b>Price</b> </th>
+            <td mat-cell *matCellDef="let entry"> {{entry.price | currency}} </td>
+            <td mat-footer-cell *matFooterCellDef><b> {{getTotalCost() | currency}}</b> </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+        <div style="margin-top: 1rem; display: flex; justify-content: space-between;">
+          <button (click)="checkOut()" mat-raised-button color="primary">Check Out</button>
+          <button (click)="clearCart()" mat-raised-button color="primary">Clear Cart</button>
+        </div>
+    </div>
+    <h2 style="color: rgb(187, 30, 30)" *ngIf="cart_entries.length <=0">You have no Items in your Cart</h2>
 </div>

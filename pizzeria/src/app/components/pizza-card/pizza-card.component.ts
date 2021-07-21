@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,9 +9,9 @@ import { CartService, Cart, CartItem } from 'src/app/services/cart.service';
 @Component({
   selector: 'app-pizza-card',
   templateUrl: './pizza-card.component.html',
-  styleUrls: ['./pizza-card.component.css']
+  styleUrls: ['./pizza-card.component.css'],
 })
-export class PizzaCardComponent implements OnInit {
+export class PizzaCardComponent implements OnInit, OnDestroy {
 
   // We pass the entire pizza to the component coz we need all the fields anyway
   @Input()
@@ -27,15 +27,29 @@ export class PizzaCardComponent implements OnInit {
   constructor(
     private cservice: CartService,
   ) { }
+  ngOnDestroy(): void {
+    localStorage.setItem('cart_items', JSON.stringify(this.current_cart.items));
+  }
 
   ngOnInit(): void {
     // Get the current cart, if any
+    // Should also unsubscribe from these subscriptions....
     this.cservice.current_cart.subscribe(cart=>this.current_cart = cart);
     this.in_cart = this.cservice.current_cart.pipe(
       map(cart=>{
-        return cart.items.filter(item=>item.pizza_id == this.pizza.id)[0]?cart.items.filter(item=>item.pizza_id == this.pizza.id)[0].quantity:0
-      })
-    );
+        const incart = cart.items.filter(item=>item.pizza_id == this.pizza.id)[0];
+        return incart?incart.quantity:0
+      }),
+      );
+      // A hack for restoring the Button's state
+      const f = localStorage.getItem('cart_items');
+      if(f){
+        // Should consider adding user info as well so that you do not get somebody else's cart
+        // But really that feels beyond the scope of the task
+        const items = (JSON.parse(f as string) as Array<CartItem>)
+        .filter(e=>e.pizza_id == this.pizza.id).length;
+        items>0?this.one_button = false:this.one_button = true;
+      }
   }
 
   addToCart(){
@@ -89,5 +103,6 @@ export class PizzaCardComponent implements OnInit {
     this.current_cart.items = this.current_cart.items.filter(el=>el.quantity>0);
     this.cservice.updateCart(this.current_cart);
   }
+  
 
 }
