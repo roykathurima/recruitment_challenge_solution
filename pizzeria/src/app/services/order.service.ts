@@ -87,4 +87,12 @@ export class OrderService {
   }
 
   // Delete Orders -> Add a Delete on Cascade on the FK constraint to make the deletion painless
+  deleteOrder(id: number){
+    return new Promise((resolve, reject)=>{
+      const url = this.apiUrl + '/delete-order/';
+      this.http.post(url, {id}).toPromise()
+      .then(result=>resolve(result))
+      .catch(err=>reject(err));
+    })
+  }
 }
