@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 // Transform the Order Object
 const transformOrder = (ret_data) =>{
     const return_array = [];
@@ -24,7 +26,7 @@ const transformOrder = (ret_data) =>{
                 id: item.id,
                 customer_name: item.customer_name,
                 gross_total: item.gross_total,
-                order_date: item.order_date,
+                order_date: moment(item.order_date).format("dddd, MMMM Do YYYY"),
                 order_items: order_items_array
             }
             return_array.push(return_obj);

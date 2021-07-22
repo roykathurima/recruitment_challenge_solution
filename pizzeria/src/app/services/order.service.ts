@@ -10,7 +10,7 @@ export interface Order {
   id: number,
   customer_name: string,
   gross_total: number,
-  order_date: Date,
+  order_date: string,
   order_items: Array<OrderItem>
 }
 
@@ -37,7 +37,7 @@ export class OrderService {
     return new Promise((resolve, reject)=>{
       const url = this.apiUrl + "/get-orders/";
       this.http.get(url).toPromise()
-      .then(orders=>resolve(orders as Array<Order>))
+      .then(orders=>resolve((orders as any).data as Array<Order>))
       .catch(err=>reject(err));
     })
   }
@@ -47,7 +47,7 @@ export class OrderService {
     return new Promise((resolve, reject)=>{
       const url = this.apiUrl + '/get-order/';
       this.http.post(url, {id}).toPromise()
-      .then(order=>resolve(order as Order))
+      .then(order=>resolve((order as any).data as Order))
       .catch(err=>reject(err));
     })
   }

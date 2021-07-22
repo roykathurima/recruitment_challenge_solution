@@ -35,7 +35,6 @@ export class CustomerStoreComponent implements OnInit {
     .catch(err=>{
       this.isloading = false;
       this.dialog.open(ErrorMessageComponent, {width:'30%', data:{message:err.message?err.message:'Failed to get Your Pizzas'}});
-      console.error("Error Fetching Pizzas: ", err);
     });
   }
 

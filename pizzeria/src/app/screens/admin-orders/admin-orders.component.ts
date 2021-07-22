@@ -1,4 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+// Angular Material Stuff
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+
+// Import the Orders Service
+import { Order, OrderService } from 'src/app/services/order.service';
+
+// Import the Messaging Component
+import { ErrorMessageComponent } from 'src/app/components/error-message/error-message.component';
 
 interface Transaction {
   product: string;
@@ -8,22 +19,38 @@ interface Transaction {
 @Component({
   selector: 'app-admin-orders',
   templateUrl: './admin-orders.component.html',
-  styleUrls: ['./admin-orders.component.css']
+  styleUrls: ['./admin-orders.component.css'],
+  providers: [OrderService]
 })
-export class AdminOrdersComponent implements OnInit {
+export class AdminOrdersComponent implements OnInit, AfterViewInit {
+  
+  isloading = false;
+  orders = new MatTableDataSource<Order>();
 
-  constructor() { }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngOnInit(): void {
+  constructor(
+    private oservice: OrderService,
+    private dialog: MatDialog,
+  ) { }
+  ngAfterViewInit(): void {
+    this.orders.paginator = this.paginator;
   }
 
-  displayedColumns: string[] = ['product', "date"];
-  transactions: Transaction[] = [
-    {product: 'Pepperoni Cheese Pizza', date: '16 July 2021'},
-    {product: 'Beef Pizza', date: '14 June 2021'},
-    {product: 'Chicken Pizza', date: '16 Feb 2021'},
-    {product: 'Sunscreen', date: '3 Aug 2021'},
-    {product: 'Berbecue Pizza', date: '24 Dec 2021'},
-  ];
+  ngOnInit(): void {
+    this.isloading = true;
+    this.oservice.fetchOrders()
+    .then(orders=>{
+      this.isloading = false;
+      this.orders.data = orders;
+      console.log('the orders: ', orders);
+    })
+    .catch(err=>{
+      this.isloading = false;
+      this.dialog.open(ErrorMessageComponent, {width:'30%', data:{message:err.message?err.message:'Failed to fetch Orders'}});
+    })
+  }
+
+  displayedColumns: string[] = ['customer_name', "order_date", "gross_total"];
 
 }
