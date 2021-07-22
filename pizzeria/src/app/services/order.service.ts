@@ -24,7 +24,6 @@ export interface OrderItem{
 // Order Shape as Consumed by the Backend
 export interface OrderBackend{
   user_id: number,
-  pizza_id: number,
   gross_total: number,
   order_date: string,
   order_items: Array<OrderItemBackend>,
@@ -34,7 +33,8 @@ export interface OrderBackend{
 export interface OrderItemBackend{
   quantity: number,
   unit_price: number,
-  subtotal: number
+  subtotal: number,
+  pizza_id: number
 }
 
 // We need to get the ID back after adding an order

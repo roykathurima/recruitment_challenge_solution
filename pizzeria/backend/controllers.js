@@ -149,7 +149,6 @@ const add_order = async (req, res)=>{
     // Planning on making this look sweet
     const {
         user_id,
-        pizza_id,
         gross_total,
         order_date,
         order_items //It's going to be an array of them
@@ -157,11 +156,11 @@ const add_order = async (req, res)=>{
 
     const query = {
         text:`
-            INSERT INTO orders (user_id, pizza_id, gross_total, order_date)
+            INSERT INTO orders (user_id, gross_total, order_date)
             VALUES ($1, $2, $3, $4)
             RETURNING id AS order_id
         `,
-        values: [user_id, pizza_id, gross_total, order_date]
+        values: [user_id, gross_total, order_date]
     }
     try{
         const ret_data = await pool.query(query);
@@ -170,10 +169,10 @@ const add_order = async (req, res)=>{
             order_items.forEach( async (item)=>{
                 const item_query = {
                     text:`
-                    INSERT INTO order_item (order_id, quantity, unit_price, subtotal)
+                    INSERT INTO order_item (order_id, quantity, unit_price, subtotal, pizza_id)
                     VALUES ($1, $2, $3, $4)
                     `,
-                    values:[order_identifier, item.quantity, item.unit_price, item.subtotal]
+                    values:[order_identifier, item.quantity, item.unit_price, item.subtotal, item.pizza_id]
                 }
                 try{
                     const resp = await pool.query(item_query);
@@ -205,7 +204,7 @@ const get_orders = async (req, res)=>{
         FROM orders AS a
         INNER JOIN order_item AS b ON a.id = b.order_id
         INNER JOIN users AS c ON c.id = a.user_id
-        INNER JOIN pizza AS d ON d.id = a.pizza_id
+        INNER JOIN pizza AS d ON d.id = b.pizza_id
         `,
         values:[]
     }
@@ -231,7 +230,7 @@ const get_order = async (req, res)=>{
         FROM orders AS a
         INNER JOIN order_item AS b ON a.id = b.order_id
         INNER JOIN users AS c ON c.id = a.user_id
-        INNER JOIN pizza AS d ON d.id = a.pizza_id WHERE a.id = $1
+        INNER JOIN pizza AS d ON d.id = b.pizza_id WHERE a.id = $1
         `,
         values:[id]
     }

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 
 // The shape of user
 export interface User {
+  id: string,
   email: string,
   name: string,
   phone_number: string,

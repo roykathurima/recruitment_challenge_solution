@@ -13,6 +13,8 @@ interface Transaction {
 })
 export class CheckoutComponent implements OnInit {
 
+  show_delete = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -30,5 +32,7 @@ export class CheckoutComponent implements OnInit {
     getTotalCost() {
       return this.transactions.map(t => t.cost).reduce((acc, value) => acc + value, 0);
     }
+
+    onDeletePressed(){}
 
 }
