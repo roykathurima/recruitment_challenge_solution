@@ -104,10 +104,13 @@ export class CartComponent implements OnInit {
       order_date: (new Date()).toISOString(),
       order_items,
     }
-
+    // console.log("the order: ", the_order);
+    // return;
     this.oservice.placeOrder(the_order)
     .then(result=>{
       this.isloading = false;
+      // console.log("The Result: ", result);
+      this.clearCart();
       this.router.navigate(['checkout'], {state:{order_id:result.order_id, is_admin:false}});
     })
     .catch(err=>{

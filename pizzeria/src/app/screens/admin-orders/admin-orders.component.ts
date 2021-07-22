@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 // Angular Material Stuff
@@ -26,12 +27,14 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
   
   isloading = false;
   orders = new MatTableDataSource<Order>();
+  displayedColumns: string[] = ['customer_name', "order_date", "gross_total"];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private oservice: OrderService,
     private dialog: MatDialog,
+    private router: Router,
   ) { }
   ngAfterViewInit(): void {
     this.orders.paginator = this.paginator;
@@ -43,7 +46,6 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     .then(orders=>{
       this.isloading = false;
       this.orders.data = orders;
-      console.log('the orders: ', orders);
     })
     .catch(err=>{
       this.isloading = false;
@@ -51,6 +53,7 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     })
   }
 
-  displayedColumns: string[] = ['customer_name', "order_date", "gross_total"];
-
+  onRowClicked(row: Order){
+    this.router.navigate(['order-details'], {state:{order_id:row.id, is_admin:true}});
+  }
 }

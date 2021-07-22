@@ -18,7 +18,7 @@ export interface Order {
 export interface OrderItem{
   quantity: number,
   pizza_name: string,
-  unit_price: string,
+  unit_price: number,
 }
 
 // Order Shape as Consumed by the Backend

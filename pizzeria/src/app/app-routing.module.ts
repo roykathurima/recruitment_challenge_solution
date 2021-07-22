@@ -31,12 +31,13 @@ const routes: Routes = [
     {path: 'cart', component:CartComponent},
     {path: 'checkout', component:CheckoutComponent},
   ]},
-
+  
   // Admin Routes
   {path: '', component:AdminNavComponent, children:[
     {path:'home', component:AdminHomeComponent},
     {path:'orders', component:AdminOrdersComponent},
     {path:'add-pizza', component:AddPizzaComponent},
+    {path: 'order-details', component:CheckoutComponent},
   ]}
 
 ];

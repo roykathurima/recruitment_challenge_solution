@@ -157,7 +157,7 @@ const add_order = async (req, res)=>{
     const query = {
         text:`
             INSERT INTO orders (user_id, gross_total, order_date)
-            VALUES ($1, $2, $3, $4)
+            VALUES ($1, $2, $3)
             RETURNING id AS order_id
         `,
         values: [user_id, gross_total, order_date]
@@ -170,7 +170,7 @@ const add_order = async (req, res)=>{
                 const item_query = {
                     text:`
                     INSERT INTO order_item (order_id, quantity, unit_price, subtotal, pizza_id)
-                    VALUES ($1, $2, $3, $4)
+                    VALUES ($1, $2, $3, $4, $5)
                     `,
                     values:[order_identifier, item.quantity, item.unit_price, item.subtotal, item.pizza_id]
                 }
@@ -200,7 +200,7 @@ const get_orders = async (req, res)=>{
         // We want everything from the orders table
         // used AS customer_name because of the ambiguity between customer and pizza name
         text: `
-        SELECT a.order_date, a.gross_total, b.quantity, b.unit_price, c.name AS customer_name, c.address, d.name
+        SELECT a.order_date, a.id, a.gross_total, b.quantity, b.unit_price, c.name AS customer_name, c.address, d.name
         FROM orders AS a
         INNER JOIN order_item AS b ON a.id = b.order_id
         INNER JOIN users AS c ON c.id = a.user_id
@@ -239,7 +239,8 @@ const get_order = async (req, res)=>{
         // The data returned returned will need an extra transformation step
         // The order items should be an array inside the orders object
         const return_array = transformOrder(ret_data)
-        res.send({'error':'0', 'data':return_array});
+        // Since we are only expecting one element
+        res.send({'error':'0', 'data':return_array[0]});
     }catch(e){
         console.error('Error adding an Order: ', e);
         res.send({'error':'1', 'message':'Failed to Get the Order'});
