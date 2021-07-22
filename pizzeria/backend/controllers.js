@@ -183,7 +183,7 @@ const add_order = async (req, res)=>{
             })
             // Send this outside the loop, when we are done
             // We return the main order items...
-            res.send({'error':'0', 'data':{row_count: ret_data.rowCount, action:ret_data.command}});
+            res.send({'error':'0', 'data':{row_count: ret_data.rowCount, action:ret_data.command, order_id: order_identifier}});
         }else{
             // It'll probably be handled in the catch block but just in case
             res.send({'error':'1', 'message':'Failed to Place your Order'});

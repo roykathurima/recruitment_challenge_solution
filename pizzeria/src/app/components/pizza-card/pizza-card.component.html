@@ -6,13 +6,13 @@
     </mat-card-header>
     <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
     <mat-card-actions style="text-align: center; margin-bottom: 0.5rem;">
-      <button (click)="addToCart()" *ngIf="one_button" style="width:100%" mat-raised-button color="primary">ADD TO CART</button>
+      <button class="inline_button" (click)="addToCart()" *ngIf="one_button" style="width:100%" mat-raised-button color="primary">ADD TO CART</button>
       <div *ngIf="!one_button" style="display: flex;">
-        <button (click)="removeQuantity()" mat-raised-button color="primary">-</button>
+        <button class="inline_button" (click)="removeQuantity()" mat-raised-button color="primary">-</button>
         <div class="cart-items">
             <p>{{in_cart | async}} in cart</p>
         </div>
-        <button (click)="addQuantity()" style="margin: 0 0" mat-raised-button color="primary">+</button>
+        <button class="inline_button" (click)="addQuantity()" style="margin: 0 0" mat-raised-button color="primary">+</button>
       </div>
     </mat-card-actions>
   </mat-card>

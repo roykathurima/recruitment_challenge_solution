@@ -20,7 +20,7 @@
             <!-- Gross Total Column -->
             <ng-container matColumnDef="gross_total">
               <th mat-header-cell *matHeaderCellDef> <b>Gross Total</b> </th>
-              <td mat-cell *matCellDef="let order"> {{order.gross_total}} </td>
+              <td mat-cell *matCellDef="let order"> {{order.gross_total | currency}} </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
