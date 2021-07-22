@@ -42,7 +42,23 @@ export class AddPizzaComponent implements OnInit {
       this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Price Shoild be a valid Number'}});
       return
     }
-
+    
+    // Add the Pizza
+    this.isloading = true;
+    this.pservice.addPizza(this.name, parseFloat(this.price))
+    .then(rst=>{
+      console.log(rst)
+      // Kill the spinner, clear fields to allow for another insert and show success message
+      this.isloading = false;
+      this.name = '';
+      this.price = '';
+      // Should have just calles this a Message Component but that ship sailed
+      this.dialog.open(ErrorMessageComponent, {width:'30%', data:{message:'Pizza successfully added to the store'}});
+    })
+    .catch(err=>{
+      this.isloading = false;
+      this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Failed to add the Pizza'}});
+    })
   }
   
   onDeletePressed(){}

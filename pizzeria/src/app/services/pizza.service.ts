@@ -53,4 +53,14 @@ export class PizzaService {
       .catch(err=>reject(err));
     })
   }
+
+  // Add a single Pizza
+  addPizza(name: string, price: number){
+    return new Promise((resolve, reject)=>{
+      const url = this.apiUrl + "/add-pizza/";
+      this.http.post(url, {name, price}).toPromise()
+      .then(result=>resolve(result))
+      .catch(err=>reject(err))
+    })
+  }
 }
