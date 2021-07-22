@@ -3,16 +3,17 @@
     <mat-card>
         <div>
             <p>Pizza Name</p>
-            <input type="text" class="form-control">
+            <input [(ngModel)]="name" type="text" class="form-control">
         </div>
         <div style="margin-top:1rem;">
             <p>Price</p>
-            <input type="text" class="form-control">
+            <input [(ngModel)]="price" type="text" class="form-control">
         </div>
         <div style="display: flex; justify-content: space-evenly;margin-top:2rem">
-            <button mat-raised-button color="primary">SAVE</button>
-            <button mat-raised-button color="warn">DELETE</button>
+            <button (click)="onSavePressed()" mat-raised-button color="primary">SAVE</button>
+            <button *ngIf="show_delete" (click)="onDeletePressed()" mat-raised-button color="warn">DELETE</button>
         </div>
     </mat-card>
-
 </div>
+
+<app-spinner *ngIf="isloading"></app-spinner>
