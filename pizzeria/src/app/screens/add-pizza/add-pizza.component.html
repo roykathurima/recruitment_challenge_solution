@@ -10,7 +10,8 @@
             <input [(ngModel)]="price" type="text" class="form-control">
         </div>
         <div style="display: flex; justify-content: space-evenly;margin-top:2rem">
-            <button (click)="onSavePressed()" mat-raised-button color="primary">SAVE</button>
+            <button *ngIf="!show_delete" (click)="onSavePressed()" mat-raised-button color="primary">SAVE</button>
+            <button *ngIf="show_delete" (click)="onEditPressed()" mat-raised-button color="primary">EDIT</button>
             <button *ngIf="show_delete" (click)="onDeletePressed()" mat-raised-button color="warn">DELETE</button>
         </div>
     </mat-card>

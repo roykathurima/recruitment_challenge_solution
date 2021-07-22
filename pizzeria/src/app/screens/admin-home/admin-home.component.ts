@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { Router } from '@angular/router';
 
 
 // Get the Pizza Service Right Here
@@ -30,6 +31,7 @@ export class AdminHomeComponent implements OnInit, AfterViewInit {
   constructor(
     private pservice: PizzaService,
     private dialog: MatDialog,
+    private router: Router,
     ) { }
     
   ngOnInit(): void {
@@ -53,5 +55,10 @@ export class AdminHomeComponent implements OnInit, AfterViewInit {
   searchPizzas(){
     const keyword = this.search_keyword.trim().toLowerCase();
     this.dataSource.filter = keyword
+  }
+  
+  rowClicked(pizza: Pizza){
+    // console.log("the Pizza: ", pizza);
+    this.router.navigate(['add-pizza'], {state:{pizza}});
   }
 }

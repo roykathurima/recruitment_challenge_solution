@@ -19,6 +19,8 @@ export class AddPizzaComponent implements OnInit {
   show_delete = false;
   isloading = false;
 
+  passed_pizza = {} as Pizza;
+
   constructor(
     private pservice: PizzaService,
     private dialog: MatDialog,
@@ -26,7 +28,15 @@ export class AddPizzaComponent implements OnInit {
 
   ngOnInit(): void {
     // Should Check here if its an edit/delete so as to prepopulate the fields
-    // and also either hide/show the delete button
+    // and also either hide/show the delete 
+    this.passed_pizza = history.state.pizza;
+    if(this.passed_pizza){
+      this.show_delete = true;
+      this.name = this.passed_pizza.name;
+      this.price = this.passed_pizza.price.toString();
+    }else{
+      this.show_delete = false;
+    }
   }
 
   onSavePressed(){
@@ -62,5 +72,7 @@ export class AddPizzaComponent implements OnInit {
   }
   
   onDeletePressed(){}
+
+  onEditPressed(){}
 
 }
