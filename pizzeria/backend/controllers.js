@@ -4,6 +4,9 @@ const { Pool } = require('pg')
 // Local Test Database Config
 const dbConfig = require('./config/db_config');
 
+// Transform the order object to match the shape that we expect in the UI
+const { transformOrder } = require('./utils');
+
 // Connection credentials for the database
 let conn_credentials = dbConfig
 
@@ -196,8 +199,9 @@ const get_orders = async (req, res)=>{
     // This is goint to be a GET request so no params
     const query = {
         // We want everything from the orders table
+        // used AS customer_name because of the ambiguity between customer and pizza name
         text: `
-        SELECT a.order_date, a.gross_total, b.quantity, b.unit_price, c.name, c.address, d.name
+        SELECT a.order_date, a.gross_total, b.quantity, b.unit_price, c.name AS customer_name, c.address, d.name
         FROM orders AS a
         INNER JOIN order_item AS b ON a.id = b.order_id
         INNER JOIN users AS c ON c.id = a.user_id
@@ -209,7 +213,8 @@ const get_orders = async (req, res)=>{
         // The data returned returned will need an extra transformation step
         // The order items should be an array inside the orders 
         const ret_data = await pool.query(query);
-        res.send({'error':'0', 'data':ret_data.rows});
+        const return_array = transformOrder(ret_data)
+        res.send({'error':'0', 'data':return_array});
     }catch(e){
         console.error('Error adding an Order: ', e);
         res.send({'error':'1', 'message':'Failed to get the Orders'});
@@ -222,7 +227,7 @@ const get_order = async (req, res)=>{
     const query = {
         // We want everything from the orders table
         text: `
-        SELECT a.order_date, a.gross_total, b.quantity, b.unit_price, c.name, c.address, d.name
+        SELECT a.order_date, a.id, a.gross_total, b.quantity, b.unit_price, c.name AS customer_name, c.address, d.name
         FROM orders AS a
         INNER JOIN order_item AS b ON a.id = b.order_id
         INNER JOIN users AS c ON c.id = a.user_id
@@ -234,7 +239,8 @@ const get_order = async (req, res)=>{
         const ret_data = await pool.query(query);
         // The data returned returned will need an extra transformation step
         // The order items should be an array inside the orders object
-        res.send({'error':'0', 'data':ret_data.rows});
+        const return_array = transformOrder(ret_data)
+        res.send({'error':'0', 'data':return_array});
     }catch(e){
         console.error('Error adding an Order: ', e);
         res.send({'error':'1', 'message':'Failed to Get the Order'});
