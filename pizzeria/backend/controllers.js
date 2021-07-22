@@ -137,8 +137,67 @@ const edit_pizza = async (req, res)=>{
         res.send({'error':'0', 'message':{row_count: ret_data.rowCount, action:ret_data.command}});
     }catch(e){
         console.error('Error Deleting Pizza: ', e);
-        res.send({'error':'0', 'message':'Failed to Update the Pizza'});
+        res.send({'error':'1', 'message':'Failed to Update the Pizza'});
     }
 }
 
-module.exports = { add_user, get_user, get_pizza, get_pizzas, add_pizza, delete_pizza, edit_pizza }
+// Enter orders into the database
+const add_order = async (req, res)=>{
+    // Planning on making this look sweet
+    const {
+        user_id,
+        pizza_id,
+        gross_total,
+        order_date,
+        order_items //It's going to be an array of them
+    } = req.body;
+
+    const query = {
+        text:`
+            INSERT INTO orders (user_id, pizza_id, gross_total, order_date)
+            VALUES ($1, $2, $3, $4)
+            RETURNING id AS order_id
+        `,
+        values: [user_id, pizza_id, gross_total, order_date]
+    }
+    try{
+        const ret_data = await pool.query(query);
+        const order_identifier = ret_data.rows[0].order_id
+        if(order_identifier){
+            order_items.forEach( async (item)=>{
+                const item_query = {
+                    text:`
+                    INSERT INTO order_item (order_id, quantity, unit_price, subtotal)
+                    VALUES ($1, $2, $3, $4)
+                    `,
+                    values:[order_identifier, item.quantity, item.unit_price, item.subtotal]
+                }
+                try{
+                    const resp = await pool.query(item_query);
+                }catch(e){
+                    console.error("Error Adding Item", e)
+                }
+            })
+            // Send this outside the loop, when we are done
+            // We return the main order items...
+            res.send({'error':'0', 'message':{row_count: ret_data.rowCount, action:ret_data.command}});
+        }else{
+            // It'll probably be handled in the catch block but just in case
+            res.send({'error':'1', 'message':'Failed to Place your Order'});
+        }
+    }catch(e){
+        console.error('Error adding an Order: ', e);
+        res.send({'error':'1', 'message':'Failed to Place your Order'});
+    }
+}
+
+module.exports = {
+    add_user,
+    get_user,
+    get_pizza,
+    get_pizzas,
+    add_pizza,
+    delete_pizza,
+    edit_pizza,
+    add_order
+}
