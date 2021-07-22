@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 // Import the Pizza Service
@@ -24,6 +25,7 @@ export class AddPizzaComponent implements OnInit {
   constructor(
     private pservice: PizzaService,
     private dialog: MatDialog,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +73,22 @@ export class AddPizzaComponent implements OnInit {
     })
   }
   
-  onDeletePressed(){}
+  onDeletePressed(){
+    this.isloading = true;
+    this.pservice.deletePizza(this.passed_pizza.id.toString())
+    .then(rst=>{
+      this.isloading = false;
+      const dialaogRef = this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Pizza Deleted Successfully'}});
+      setTimeout(()=>{
+        dialaogRef.close();
+        this.router.navigate(['home']);
+      }, 1000);
+    })
+    .catch(err=>{
+      this.isloading = false;
+      this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Failed to Delete Pizza'}});
+    })
+  }
 
   onEditPressed(){}
 

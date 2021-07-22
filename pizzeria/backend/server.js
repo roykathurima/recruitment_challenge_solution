@@ -27,7 +27,7 @@ app.post('/get-user/', get_user);
 app.post('/get-pizza/', get_pizza);
 app.post('/add-pizza/', add_pizza);
 app.get('/get-pizzas/', get_pizzas);
-app.get('/delete-pizza/', delete_pizza);
+app.post('/delete-pizza/', delete_pizza);
 
 
 const PORT = process.env.PORT || 3000
