@@ -43,18 +43,18 @@ export class AddPizzaComponent implements OnInit {
 
   onSavePressed(){
     // Make sure that the fields are not Empty
-    if(this.name == '' || this.price == ''){
+    const inputs_valid = this.areInputsValid()
+    if(inputs_valid == 'empty'){
       this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'All Fields are Mandatory'}});
       return
     }
 
     // Make sure that the phone number is valid
-    const price_format = /^\d+(\.\d+)?$/
-    if(!this.price.match(price_format)){
+    if(inputs_valid == 'invalid_phone'){
       this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Price Shoild be a valid Number'}});
       return
     }
-    
+
     // Add the Pizza
     this.isloading = true;
     this.pservice.addPizza(this.name, parseFloat(this.price))
@@ -79,6 +79,7 @@ export class AddPizzaComponent implements OnInit {
     .then(rst=>{
       this.isloading = false;
       const dialaogRef = this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Pizza Deleted Successfully'}});
+      // After a second, close the dialog and navigate to the home page
       setTimeout(()=>{
         dialaogRef.close();
         this.router.navigate(['home']);
@@ -90,6 +91,43 @@ export class AddPizzaComponent implements OnInit {
     })
   }
 
-  onEditPressed(){}
+  onEditPressed(){
+    const inputs_valid = this.areInputsValid();
+    if(inputs_valid == 'empty'){
+      this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'All Fields are Mandatory'}});
+      return
+    }
+
+    // Make sure that the phone number is valid
+    if(inputs_valid == 'invalid_phone'){
+      this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Price Shoild be a valid Number'}});
+      return
+    }
+    
+    // Edit the Pizza
+    this.isloading = true;
+    this.pservice.editPizza({id: this.passed_pizza.id, name:this.name, price: parseFloat(this.price)})
+    .then(rst=>{
+      this.isloading = false
+      this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:'Pizza Updated Successfully'}});
+    })
+    .catch(err=>{
+      this.isloading = false;
+      this.dialog.open(ErrorMessageComponent, {width:'20%', data:{message:err.message?err.message:'Failed to update Pizza'}});
+    });
+  }
+
+  // Crude input validation
+  areInputsValid(): string{
+    let retVal = 'valid';
+    if(this.name == '' || this.price == '') {
+      return 'empty';
+    }
+    const price_format = /^\d+(\.\d+)?$/
+    if(!this.price.match(price_format)){
+      return 'invalid_phone'
+    }
+    return retVal
+  }
 
 }

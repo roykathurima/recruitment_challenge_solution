@@ -63,4 +63,14 @@ export class PizzaService {
       .catch(err=>reject(err))
     })
   }
+
+  // Edit Pizza
+  editPizza(pizza: Pizza){
+    return new Promise((resolve, reject)=>{
+      const url = this.apiUrl + '/edit-pizza/';
+      this.http.post(url, {...pizza}).toPromise()
+      .then(rst=>resolve(rst))
+      .catch(err=>reject(err));
+    });
+  }
 }

@@ -125,4 +125,20 @@ const delete_pizza = async (req, res)=>{
     }
 }
 
-module.exports = { add_user, get_user, get_pizza, get_pizzas, add_pizza, delete_pizza }
+// Update Pizza
+const edit_pizza = async (req, res)=>{
+    const { id, name, price } = req.body;
+    const query = {
+        text: 'UPDATE pizza SET name=$1, price = $2 WHERE id = $3',
+        values: [name, price, id]
+    }
+    try{
+        const ret_data = await pool.query(query);
+        res.send({'error':'0', 'message':{row_count: ret_data.rowCount, action:ret_data.command}});
+    }catch(e){
+        console.error('Error Deleting Pizza: ', e);
+        res.send({'error':'0', 'message':'Failed to Update the Pizza'});
+    }
+}
+
+module.exports = { add_user, get_user, get_pizza, get_pizzas, add_pizza, delete_pizza, edit_pizza }
