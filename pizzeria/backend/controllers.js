@@ -180,7 +180,7 @@ const add_order = async (req, res)=>{
             })
             // Send this outside the loop, when we are done
             // We return the main order items...
-            res.send({'error':'0', 'message':{row_count: ret_data.rowCount, action:ret_data.command}});
+            res.send({'error':'0', 'data':{row_count: ret_data.rowCount, action:ret_data.command}});
         }else{
             // It'll probably be handled in the catch block but just in case
             res.send({'error':'1', 'message':'Failed to Place your Order'});
@@ -188,6 +188,56 @@ const add_order = async (req, res)=>{
     }catch(e){
         console.error('Error adding an Order: ', e);
         res.send({'error':'1', 'message':'Failed to Place your Order'});
+    }
+}
+
+// Get all Order from the database
+const get_orders = async (req, res)=>{
+    // This is goint to be a GET request so no params
+    const query = {
+        // We want everything from the orders table
+        text: `
+        SELECT a.order_date, a.gross_total, b.quantity, b.unit_price, c.name, c.address, d.name
+        FROM orders AS a
+        INNER JOIN order_item AS b ON a.id = b.order_id
+        INNER JOIN users AS c ON c.id = a.user_id
+        INNER JOIN pizza AS d ON d.id = a.pizza_id
+        `,
+        values:[]
+    }
+    try{
+        // The data returned returned will need an extra transformation step
+        // The order items should be an array inside the orders 
+        const ret_data = await pool.query(query);
+        res.send({'error':'0', 'data':ret_data.rows});
+    }catch(e){
+        console.error('Error adding an Order: ', e);
+        res.send({'error':'1', 'message':'Failed to get the Orders'});
+    }
+}
+
+// Get a single order from the database
+const get_order = async (req, res)=>{
+    const id = req.body.id;
+    const query = {
+        // We want everything from the orders table
+        text: `
+        SELECT a.order_date, a.gross_total, b.quantity, b.unit_price, c.name, c.address, d.name
+        FROM orders AS a
+        INNER JOIN order_item AS b ON a.id = b.order_id
+        INNER JOIN users AS c ON c.id = a.user_id
+        INNER JOIN pizza AS d ON d.id = a.pizza_id WHERE a.id = $1
+        `,
+        values:[id]
+    }
+    try{
+        const ret_data = await pool.query(query);
+        // The data returned returned will need an extra transformation step
+        // The order items should be an array inside the orders object
+        res.send({'error':'0', 'data':ret_data.rows});
+    }catch(e){
+        console.error('Error adding an Order: ', e);
+        res.send({'error':'1', 'message':'Failed to Get the Order'});
     }
 }
 
@@ -199,5 +249,7 @@ module.exports = {
     add_pizza,
     delete_pizza,
     edit_pizza,
-    add_order
+    add_order,
+    get_orders,
+    get_order,
 }

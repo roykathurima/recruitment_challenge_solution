@@ -21,6 +21,8 @@ const {
     delete_pizza,
     edit_pizza,
     add_order,
+    get_orders,
+    get_order,
 } = require('./controllers');
 
 // App-level to log request method and path
@@ -38,7 +40,11 @@ app.post('/add-pizza/', add_pizza);
 app.get('/get-pizzas/', get_pizzas);
 app.post('/delete-pizza/', delete_pizza);
 app.post('/edit-pizza/', edit_pizza);
+
+// Order Routes
 app.post('/add-order/', add_order);
+app.get('/get-orders/', get_orders);
+app.post('/get-order/', get_order);
 
 
 const PORT = process.env.PORT || 3000
