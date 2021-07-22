@@ -7,20 +7,20 @@
         </a>
     </div>
     <div>
-        <input style="width: 100%;" type="text" class="form-control" placeholder="Search" />
+        <input [(ngModel)]="search_keyword" (keyup)="searchPizzas()" style="width: 100%;" type="text" class="form-control" placeholder="Search" />
 
         <!-- Mat-Table -->
-        <table style="margin-top: 1rem;" mat-table [dataSource]="transactions" class="mat-elevation-z8">
+        <table style="margin-top: 1rem;" mat-table [dataSource]="pizzas" class="mat-elevation-z8">
             <!-- Product Column -->
-            <ng-container matColumnDef="product">
+            <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef> <b>Name</b> </th>
-              <td mat-cell *matCellDef="let transaction"> {{transaction.product}} </td>
+              <td mat-cell *matCellDef="let pizza"> {{pizza.name}} </td>
             </ng-container>
     
             <!-- Price Column -->
             <ng-container matColumnDef="price">
               <th mat-header-cell *matHeaderCellDef> <b>Price</b> </th>
-              <td mat-cell *matCellDef="let transaction"> {{transaction.price | currency}} </td>
+              <td mat-cell *matCellDef="let pizza"> {{pizza.price | currency}} </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
