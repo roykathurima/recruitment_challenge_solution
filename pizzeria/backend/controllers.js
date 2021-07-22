@@ -44,7 +44,7 @@ const add_user = async (req, res) =>{
     }catch(e){
         // For now we'll return a GENERIC error messsage and log into the console
         console.error("Error during user addition: ",e);
-        res.send({'error':'1', 'message':'Failed to insert record intot the database'});
+        res.send({'error':'1', 'message':'Failed to insert record into the database'});
     }
 }
 
@@ -247,6 +247,23 @@ const get_order = async (req, res)=>{
     }
 }
 
+// Delete an order from DB.
+// This will also delete its associated order items since the FK ON CASCADE constraint has been specified
+const delete_order = async (req, res)=>{
+    const id = req.body.id;
+    const query = {
+        text:'DELETE FROM orders WHERE id = $1',
+        values: [id],
+    }
+    try{
+        const ret_data = await pool.query(query);
+        res.send({'error':'0', 'message':{row_count: ret_data.rowCount, action:ret_data.command}});
+    }catch(e){
+        console.error("Error during order deleteion: ",e);
+        res.send({'error':'1', 'message':'Failed to delete the record from the database'});
+    }
+}
+
 module.exports = {
     add_user,
     get_user,
@@ -258,4 +275,5 @@ module.exports = {
     add_order,
     get_orders,
     get_order,
+    delete_order,
 }
