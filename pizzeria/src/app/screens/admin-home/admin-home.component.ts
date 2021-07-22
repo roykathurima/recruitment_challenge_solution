@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+
 
 // Get the Pizza Service Right Here
 import { PizzaService, Pizza } from 'src/app/services/pizza.service';
@@ -13,42 +16,42 @@ import { ErrorMessageComponent } from 'src/app/components/error-message/error-me
   styleUrls: ['./admin-home.component.css'],
   providers: [PizzaService],
 })
-export class AdminHomeComponent implements OnInit {
+export class AdminHomeComponent implements OnInit, AfterViewInit {
   isloading = false;
 
   search_keyword = '';
   // For the Table
   displayedColumns: string[] = ['name', "price"];
-  pizzas: Pizza[] = [];
-  // A duplicate Array to restore pizzas after search mutations
-  pizzas_cp: Pizza[] = [];
 
+  dataSource = new MatTableDataSource<Pizza>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   constructor(
     private pservice: PizzaService,
     private dialog: MatDialog,
-  ) { }
-
+    ) { }
+    
   ngOnInit(): void {
     this.isloading = true;
     // Fetch the Pizzas Right Here
     this.pservice.getPizzas()
     .then(pizza_array=>{
       this.isloading = false;
-      this.pizzas = pizza_array
-      this.pizzas_cp = pizza_array
+      this.dataSource.data = pizza_array
     })
     .catch(err=>{
       this.isloading = false;
       this.dialog.open(ErrorMessageComponent, {data: {message:err.message?err.message:'Failed to fetch Pizzas'}})
     })
   }
-
+    
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+    
   searchPizzas(){
     const keyword = this.search_keyword.trim().toLowerCase();
-    if(keyword == ""){
-      this.pizzas = this.pizzas_cp
-    }else{
-      this.pizzas = this.pizzas_cp.filter(pizza=>pizza.name.toLowerCase().trim().includes(keyword));
-    }
+    this.dataSource.filter = keyword
   }
 }

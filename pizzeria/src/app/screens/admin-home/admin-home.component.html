@@ -10,7 +10,7 @@
         <input [(ngModel)]="search_keyword" (keyup)="searchPizzas()" style="width: 100%;" type="text" class="form-control" placeholder="Search" />
 
         <!-- Mat-Table -->
-        <table style="margin-top: 1rem;" mat-table [dataSource]="pizzas" class="mat-elevation-z8">
+        <table style="margin-top: 1rem;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <!-- Product Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef> <b>Name</b> </th>
@@ -26,6 +26,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
 </div>
 <app-spinner *ngIf="isloading"></app-spinner>
