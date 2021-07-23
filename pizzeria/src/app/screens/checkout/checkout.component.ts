@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 // Import the required services
-import { OrderService, Order, OrderItem } from 'src/app/services/order.service';
+import { OrderService, Order } from 'src/app/services/order.service';
 
 // Import the Messagging component
 import { ErrorMessageComponent } from 'src/app/components/error-message/error-message.component';
@@ -27,6 +27,9 @@ export class CheckoutComponent implements OnInit {
   order = {} as Order
   displayedColumns: string[] = ['pizza_name', 'subtotal'];
   order_items: OrderItemSummay[] = [];
+  
+  // To inform user if a discount was applied
+  raw_order_total = 100;
 
   constructor(
     private oservice: OrderService,
@@ -61,6 +64,7 @@ export class CheckoutComponent implements OnInit {
           subtotal: (item.quantity * item.unit_price),
         }
       })
+      this.raw_order_total = this.order_items.reduce((pVal, cVal)=>{return pVal+cVal.subtotal}, 0)
     })
     .catch(err=>{
       this.isloading = false;

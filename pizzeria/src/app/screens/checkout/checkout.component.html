@@ -2,22 +2,15 @@
   <h1 *ngIf="show_delete"><b>Order Details</b></h1>
   <h1 *ngIf="!show_delete"><b>Order Summary</b></h1>
   <table mat-table [dataSource]="order_items" class="mat-elevation-z8">
-      <!-- Item Column -->
+      
+    <!-- Pizza Column -->
       <ng-container matColumnDef="pizza_name">
-        <!-- <th mat-header-cell *matHeaderCellDef> Item </th> -->
         <td mat-cell *matCellDef="let transaction"> {{transaction.quantity}} x {{transaction.pizza_name}} </td>
         <td mat-footer-cell *matFooterCellDef> Total </td>
       </ng-container>
-    
-      <!-- Quantity Column -->
-      <!-- <ng-container matColumnDef="quantity">
-        <td mat-cell *matCellDef="let transaction"> {{transaction.quantity}} </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container> -->
 
-      <!-- Cost Column -->
+      <!-- Subtotal Column -->
       <ng-container matColumnDef="subtotal">
-        <!-- <th mat-header-cell *matHeaderCellDef> Cost </th> -->
         <td mat-cell *matCellDef="let transaction"> {{transaction.subtotal | currency}} </td>
         <td mat-footer-cell *matFooterCellDef> {{order.gross_total| currency}} </td>
       </ng-container>
@@ -28,8 +21,27 @@
           <b *ngIf="show_delete">Order for {{order.customer_name}} made on {{order.order_date}}</b>
         </td>
       </ng-container>
+
+      <ng-container matColumnDef="discount">
+        <div *ngIf="raw_order_total>50 && raw_order_total<100">
+          <td style="font-style: italic;" mat-footer-cell *matFooterCellDef colspan="2">
+            A 5% Discount has been applied
+          </td>
+        </div>
+        <div *ngIf="raw_order_total>100">
+          <td style="font-style: italic;" mat-footer-cell *matFooterCellDef colspan="2">
+            A 10% Discount has been applied
+          </td>
+        </div>
+        <div *ngIf="raw_order_total<=50">
+          <td style="font-style: italic;" mat-footer-cell *matFooterCellDef colspan="2">
+            No Discount has been applied
+          </td>
+        </div>
+      </ng-container>
+
+      <tr mat-header-row *matFooterRowDef="['discount']"></tr>
       <tr mat-header-row *matHeaderRowDef="['disclaimer']"></tr>
-      <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
     </table>

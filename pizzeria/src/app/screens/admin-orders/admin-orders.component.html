@@ -1,7 +1,7 @@
 <div style="padding: 1rem 0;">
   <h1 style="margin-left: 1rem;"><b>Orders</b></h1>
     <div>
-        <input style="width: 100%;" type="text" class="form-control" placeholder="Search by Name" />
+        <input [(ngModel)]="search_keyword" (keyup)="searchOrders()" style="width: 100%;" type="text" class="form-control" placeholder="Search by Name" />
 
         <!-- Mat-Table -->
         <table style="margin-top: 1rem;" mat-table [dataSource]="orders" matSort class="mat-elevation-z8">

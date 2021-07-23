@@ -30,6 +30,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
   orders = new MatTableDataSource<Order>();
   displayedColumns: string[] = ['customer_name', "order_date", "gross_total"];
 
+  search_keyword = ''
+
   // Add pagination for easy access
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -59,5 +61,10 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
 
   onRowClicked(row: Order){
     this.router.navigate(['order-details'], {state:{order_id:row.id, is_admin:true}});
+  }
+
+  searchOrders(){
+    const keyword = this.search_keyword.trim().toLowerCase();
+    this.orders.filter = keyword;
   }
 }
