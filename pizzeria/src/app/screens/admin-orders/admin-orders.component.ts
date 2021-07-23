@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 // Angular Material Stuff
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 
 // Import the Orders Service
 import { Order, OrderService } from 'src/app/services/order.service';
@@ -29,7 +30,9 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
   orders = new MatTableDataSource<Order>();
   displayedColumns: string[] = ['customer_name', "order_date", "gross_total"];
 
+  // Add pagination for easy access
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private oservice: OrderService,
@@ -38,6 +41,7 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
   ) { }
   ngAfterViewInit(): void {
     this.orders.paginator = this.paginator;
+    this.orders.sort = this.sort;
   }
 
   ngOnInit(): void {

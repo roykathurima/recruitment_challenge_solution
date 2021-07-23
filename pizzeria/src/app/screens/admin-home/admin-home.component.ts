@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+// Angular Material Imports
 import { MatDialog } from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { Router } from '@angular/router';
-
+import {MatSort} from '@angular/material/sort';
 
 // Get the Pizza Service Right Here
 import { PizzaService, Pizza } from 'src/app/services/pizza.service';
@@ -27,6 +29,7 @@ export class AdminHomeComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Pizza>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   
   constructor(
     private pservice: PizzaService,
@@ -50,6 +53,7 @@ export class AdminHomeComponent implements OnInit, AfterViewInit {
     
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
     
   searchPizzas(){

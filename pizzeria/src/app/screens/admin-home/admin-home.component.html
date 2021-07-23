@@ -10,22 +10,22 @@
         <input [(ngModel)]="search_keyword" (keyup)="searchPizzas()" style="width: 100%;" type="text" class="form-control" placeholder="Search by Name" />
 
         <!-- Mat-Table -->
-        <table style="margin-top: 1rem;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <table style="margin-top: 1rem;" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
             <!-- Product Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> <b>Name</b> </th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>
               <td mat-cell *matCellDef="let pizza"> {{pizza.name}} </td>
             </ng-container>
     
             <!-- Price Column -->
             <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef> <b>Price</b> </th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Price</b> </th>
               <td mat-cell *matCellDef="let pizza"> {{pizza.price | currency}} </td>
             </ng-container>
 
             <ng-container matColumnDef="disclaimer">
               <td style="font-style: italic;" mat-footer-cell *matFooterCellDef colspan="2">
-                Click on a pizza row to view its details :)
+                Click on a pizza row to view its details, click on a column header to sort by that column :)
               </td>
             </ng-container>
 

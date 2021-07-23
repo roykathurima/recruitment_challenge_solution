@@ -15,6 +15,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -74,6 +75,7 @@ import { CheckoutComponent } from './screens/checkout/checkout.component';
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [CartService],
   bootstrap: [AppComponent]
