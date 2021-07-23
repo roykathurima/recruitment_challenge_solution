@@ -1,19 +1,19 @@
 <div style="padding: 1rem 0;">
-  <h1><b>Order Summary</b></h1>
+  <h1 *ngIf="show_delete"><b>Order Details</b></h1>
+  <h1 *ngIf="!show_delete"><b>Order Summary</b></h1>
   <table mat-table [dataSource]="order_items" class="mat-elevation-z8">
       <!-- Item Column -->
       <ng-container matColumnDef="pizza_name">
         <!-- <th mat-header-cell *matHeaderCellDef> Item </th> -->
-        <td mat-cell *matCellDef="let transaction"> {{transaction.pizza_name}} </td>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.quantity}} x {{transaction.pizza_name}} </td>
         <td mat-footer-cell *matFooterCellDef> Total </td>
       </ng-container>
     
-      <!-- Cost Column -->
-      <ng-container matColumnDef="quantity">
-        <!-- <th mat-header-cell *matHeaderCellDef> Cost </th> -->
+      <!-- Quantity Column -->
+      <!-- <ng-container matColumnDef="quantity">
         <td mat-cell *matCellDef="let transaction"> {{transaction.quantity}} </td>
         <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+      </ng-container> -->
 
       <!-- Cost Column -->
       <ng-container matColumnDef="subtotal">
@@ -24,8 +24,8 @@
 
       <ng-container matColumnDef="disclaimer">
         <td mat-footer-cell *matHeaderCellDef colspan="2">
-          <b *ngIf="!show_delete">Your Order has 6 Items</b>
-          <b *ngIf="show_delete">Order for {{order.customer_name}}</b>
+          <b *ngIf="!show_delete">Your Order has {{order_items.length}} Items</b>
+          <b *ngIf="show_delete">Order for {{order.customer_name}} made on {{order.order_date}}</b>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="['disclaimer']"></tr>

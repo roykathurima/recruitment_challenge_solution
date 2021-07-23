@@ -26,7 +26,7 @@
   
           <!-- Price Column -->
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> <b>Price</b> </th>
+            <th mat-header-cell *matHeaderCellDef> <b>Unit Price</b> </th>
             <td mat-cell *matCellDef="let entry"> {{entry.price | currency}} </td>
             <td mat-footer-cell *matFooterCellDef><b> {{getTotalCost() | currency}}</b> </td>
           </ng-container>

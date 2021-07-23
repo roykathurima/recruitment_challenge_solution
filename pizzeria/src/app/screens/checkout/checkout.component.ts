@@ -25,6 +25,8 @@ export class CheckoutComponent implements OnInit {
   show_delete = false;
   isloading = false;
   order = {} as Order
+  displayedColumns: string[] = ['pizza_name', 'subtotal'];
+  order_items: OrderItemSummay[] = [];
 
   constructor(
     private oservice: OrderService,
@@ -33,11 +35,21 @@ export class CheckoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const { order_id, is_admin } = history.state;
-    if(is_admin) this.show_delete = true;
     this.isloading = true;
-    console.log("the order ID: ", order_id);
-    this.oservice.fetchOrderWithId(parseInt(order_id))
+    const { order_id, is_admin } = history.state;
+    if(is_admin){
+      this.show_delete = true;
+      this.fetchTheOrder(parseInt(order_id))
+    } else{
+      // In the customer side, the order is fetched before the items are done being created
+      // So I have added a 1 second delay as a workaround
+      // Maybe I could have used a Client instead of a Pool to make the transactions synchronous 
+      setTimeout(()=>{this.fetchTheOrder(parseInt(order_id))}, 1000);
+    }
+  }
+  
+  fetchTheOrder(order_id: number){
+    this.oservice.fetchOrderWithId(order_id)
     .then(order_item=>{
       this.isloading = false;
       this.order = order_item
@@ -55,11 +67,7 @@ export class CheckoutComponent implements OnInit {
       console.error("Failed to fetch the order: ", err);
       this.dialog.open(ErrorMessageComponent, {data:{message:err.message?err.message:"Failed to fetch the order"}})
     })
-    // Pull the order straight from the database...
-    // Write an interface for the same...
   }
-  displayedColumns: string[] = ['pizza_name', 'quantity', 'subtotal'];
-  order_items: OrderItemSummay[] = [];
 
   onDeletePressed(){
     this.isloading = true;
