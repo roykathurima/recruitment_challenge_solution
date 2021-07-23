@@ -19,6 +19,9 @@ import { AdminHomeComponent } from 'src/app/screens/admin-home/admin-home.compon
 import { AdminOrdersComponent } from 'src/app/screens/admin-orders/admin-orders.component';
 import { AddPizzaComponent } from 'src/app/screens/add-pizza/add-pizza.component';
 
+// Route Guards
+import { AdminGuardService, AuthGuardService, CustomerGuardService } from 'src/app/services/auth-guard.service';
+
 const routes: Routes = [
   // The Login Component is the default route
   {path: '', component: LoginComponent},
@@ -26,14 +29,18 @@ const routes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent},
 
   // Customer Routes
-  {path: '', component: CustomerHomeComponent, children:[
+  {path: '', component: CustomerHomeComponent, canActivate: [AuthGuardService, CustomerGuardService],
+  canActivateChild: [AuthGuardService, CustomerGuardService],
+  children:[
     {path: 'store', component:CustomerStoreComponent},
     {path: 'cart', component:CartComponent},
     {path: 'checkout', component:CheckoutComponent},
   ]},
   
   // Admin Routes
-  {path: '', component:AdminNavComponent, children:[
+  {path: '', component:AdminNavComponent, canActivate: [AuthGuardService, AdminGuardService],
+  canActivateChild: [AuthGuardService, AdminGuardService],
+  children:[
     {path:'home', component:AdminHomeComponent},
     {path:'orders', component:AdminOrdersComponent},
     {path:'add-pizza', component:AddPizzaComponent},
