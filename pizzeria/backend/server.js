@@ -48,7 +48,7 @@ app.get('/get-orders/', get_orders);
 app.post('/get-order/', get_order);
 app.post('/delete-order/', delete_order);
 
-
+// Listening either port 3000 or one exposed to us in the environment var
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, ()=>console.log(`The server is listening on port ${PORT}...`));
